@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.urls import path
 
-from .views import ContactsPageView, CoursesPageView, DocSitePageView, LoginPageView, MainPageView, NewsPageView
+from .views import (ContactsPageView, CoursesPageView, DocSitePageView, LoginPageView, MainPageView, NewsPageView,
+                    NewsDetailsPageView)
 from mainapp.apps import MainappConfig
 
 app_name = MainappConfig.name
@@ -12,5 +13,6 @@ urlpatterns = [
     path("doc_site/", DocSitePageView.as_view(), name='docs'),
     path("contacts/", ContactsPageView.as_view(), name='contacts'),
     path("news/", NewsPageView.as_view(), name='news'),
+    path("news/<int:pk>", NewsDetailsPageView.as_view(), name='news_details'),
     path("courses_list/", CoursesPageView.as_view(), name='courses'),
 ]
