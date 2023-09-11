@@ -21,7 +21,14 @@ class News(models.Model):
         self.save()
 
 
+class CoursesManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(deleted=False)
+
+
 class Courses(models.Model):
+    objects = CoursesManager()
+
     name = models.CharField(max_length=256, verbose_name='Name')
     description = models.TextField(verbose_name='Description', blank=True, null=True)
     cost = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Cost', default=0)
