@@ -1,17 +1,20 @@
-{% extends 'mainapp/base.html' %}
 
+{% extends 'base.html' %}
+{% load static %}
 {% block content %}
 
-    {% include 'mainapp/components/top_nav_panel.html' %}
+{% include 'components/top_nav_panel.html' %}
 
+{% include 'components/messages.html' %}
 
 <div class="row justify-content-around align-items-center" style="height: 100vh; margin: 0px">
     <div class="text-center">
         <p>
-            <a href="/"><img src="./img/logo.png" alt=""></a>
+            <a href="{% url 'mainapp:main' %}"><img src="{% static 'img/logo.png' %}" alt=""></a>
         </p>
         <h2>Вход пользователя</h2>
-        <form>
+        <form method="post">
+            {% csrf_token %}
             <p>
                 <input id="id_username" class="form-control" type="text" name="username" placeholder="Имя пользователя"
                        required="" autofocus="">
@@ -24,20 +27,28 @@
                 <button type="submit" class="btn btn-primary btn-block">Войти</button>
             </p>
         </form>
-        <p class="text-right">
-            <a href=""><small>Забыли пароль?</small></a>
+        <p>
+            <div class="row justify-content-between">
+                <div class="col">
+                    <a href="{% url 'authapp:register' %}"><small>Регистрация</small></a>
+                </div>
+                <div class="col">
+                    <a href="#"><small>Забыли пароль?</small></a>
+                </div>
+            </div>
         </p>
         <h4>Вход через социальные сети</h4>
         <p>
         <div class="btn-group btn-block" role="group">
             <a class="btn btn-primary" href="#" role="button"><i class="fab fa-vk"></i></a>
-            <a class="btn btn-primary" href="#" role="button"><i class="fab fa-github"></i></a>
+            <a class="btn btn-primary" href="{% url 'social:begin' 'github' %}" role="button"><i class="fab fa-github"></i></a>
             <a class="btn btn-primary" href="#" role="button"><i class="fab fa-facebook"></i></a>
         </div>
         </p>
     </div>
 </div>
 
-    {% include 'mainapp/components/footer.html' %}
+    {% include 'components/footer.html' %}
+
 
 {% endblock content %}

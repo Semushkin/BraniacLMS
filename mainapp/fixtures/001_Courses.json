@@ -1,0 +1,93 @@
+[
+  {
+    "model": "mainapp.courses",
+    "pk": 1,
+    "fields": {
+      "name": "Web Python",
+      "description": null,
+      "cost": "0.00",
+      "cover": "img/course001.jpg",
+      "created": "2023-09-10T18:33:02.810Z",
+      "updated": "2023-09-11T16:23:40.092Z",
+      "deleted": false
+    }
+  },
+  {
+    "model": "mainapp.courses",
+    "pk": 2,
+    "fields": {
+      "name": "Web Golang",
+      "description": null,
+      "cost": "0.00",
+      "cover": "img/course002.jpg",
+      "created": "2023-09-10T18:45:11.581Z",
+      "updated": "2023-09-11T16:25:14.550Z",
+      "deleted": false
+    }
+  },
+  {
+    "model": "mainapp.courses",
+    "pk": 3,
+    "fields": {
+      "name": "Web JavaScript",
+      "description": null,
+      "cost": "0.00",
+      "cover": "img/course003.jpg",
+      "created": "2023-09-10T18:45:46.439Z",
+      "updated": "2023-09-11T16:25:25.870Z",
+      "deleted": false
+    }
+  },
+  {
+    "model": "mainapp.courses",
+    "pk": 4,
+    "fields": {
+      "name": "Web Java",
+      "description": null,
+      "cost": "0.00",
+      "cover": "img/course004.jpg",
+      "created": "2023-09-10T18:46:19.099Z",
+      "updated": "2023-09-11T16:25:39.667Z",
+      "deleted": false
+    }
+  },
+  {
+    "model": "mainapp.courses",
+    "pk": 5,
+    "fields": {
+      "name": "Web PHP",
+      "description": null,
+      "cost": "0.00",
+      "cover": "img/course005.jpg",
+      "created": "2023-09-10T18:46:41.925Z",
+      "updated": "2023-09-11T16:25:49.602Z",
+      "deleted": false
+    }
+  },
+  {
+    "model": "mainapp.courses",
+    "pk": 6,
+    "fields": {
+      "name": "Python AI",
+      "description": null,
+      "cost": "0.00",
+      "cover": "img/course006.jpg",
+      "created": "2023-09-10T18:47:08.130Z",
+      "updated": "2023-09-11T16:26:04.813Z",
+      "deleted": false
+    }
+  },
+  {
+    "model": "mainapp.courses",
+    "pk": 7,
+    "fields": {
+      "name": "DevOps",
+      "description": null,
+      "cost": "0.00",
+      "cover": "img/course007.jpg",
+      "created": "2023-09-10T18:47:28.323Z",
+      "updated": "2023-09-11T16:26:12.604Z",
+      "deleted": false
+    }
+  }
+]

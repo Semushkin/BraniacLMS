@@ -1,0 +1,93 @@
+[
+  {
+    "model": "mainapp.news",
+    "pk": 1,
+    "fields": {
+      "title": "Новость",
+      "preamble": null,
+      "body": "Стандартная новость",
+      "body_as_markdown": false,
+      "create_date": "2023-09-07T19:33:16.391Z",
+      "update_date": "2023-09-07T19:33:26.092Z",
+      "deleted": false
+    }
+  },
+  {
+    "model": "mainapp.news",
+    "pk": 2,
+    "fields": {
+      "title": "Новость1",
+      "preamble": null,
+      "body": "Стандартная новость1",
+      "body_as_markdown": false,
+      "create_date": "2023-09-07T19:33:55.123Z",
+      "update_date": "2023-09-07T19:33:57.845Z",
+      "deleted": false
+    }
+  },
+  {
+    "model": "mainapp.news",
+    "pk": 3,
+    "fields": {
+      "title": "Новость2",
+      "preamble": null,
+      "body": "Стандартная новость2",
+      "body_as_markdown": false,
+      "create_date": "2023-09-07T19:34:04.883Z",
+      "update_date": "2023-09-07T19:34:06.608Z",
+      "deleted": false
+    }
+  },
+  {
+    "model": "mainapp.news",
+    "pk": 4,
+    "fields": {
+      "title": "Новость3",
+      "preamble": null,
+      "body": "Стандартная новость3",
+      "body_as_markdown": false,
+      "create_date": "2023-09-07T19:34:13.826Z",
+      "update_date": "2023-09-07T19:34:14.855Z",
+      "deleted": false
+    }
+  },
+  {
+    "model": "mainapp.news",
+    "pk": 5,
+    "fields": {
+      "title": "Новость4",
+      "preamble": null,
+      "body": "Стандартная новость4",
+      "body_as_markdown": false,
+      "create_date": "2023-09-07T19:34:37.629Z",
+      "update_date": "2023-09-07T19:34:39.280Z",
+      "deleted": false
+    }
+  },
+  {
+    "model": "mainapp.news",
+    "pk": 6,
+    "fields": {
+      "title": "Новость5",
+      "preamble": null,
+      "body": "Стандартная новость5",
+      "body_as_markdown": false,
+      "create_date": "2023-09-07T19:34:45.665Z",
+      "update_date": "2023-09-07T19:34:47.262Z",
+      "deleted": false
+    }
+  },
+  {
+    "model": "mainapp.news",
+    "pk": 7,
+    "fields": {
+      "title": "Новость6",
+      "preamble": null,
+      "body": "Стандартная новость6",
+      "body_as_markdown": false,
+      "create_date": "2023-09-07T19:34:54.241Z",
+      "update_date": "2023-09-07T19:34:55.365Z",
+      "deleted": false
+    }
+  }
+]
