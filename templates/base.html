@@ -41,6 +41,7 @@
     <!-- FontAwesome -->
     <script src="{% static 'js/fontawesome.all.min.js' %}"></script>
 
+    {% block js %}
     <script>
         $(document).ready(function () {
             {% if messages %}
@@ -50,6 +51,7 @@
             {% endif %}
         });
     </script>
+    {% endblock js %}
 
 </body>
 

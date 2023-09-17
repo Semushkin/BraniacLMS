@@ -1,40 +1,51 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView
+from django.template.loader import render_to_string
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView, DetailView
 from datetime import datetime
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, JsonResponse
 
-from mainapp.models import News, Courses, Lesson, CourseTeachers
+from mainapp.forms import CourseFeedbackForm
+from mainapp.models import News, Courses, Lesson, CourseTeachers, CourseFeedback
 
 
 class MainPageView(TemplateView):
     template_name = "mainapp/index.html"
 
 
-class NewsPageView(TemplateView):
-    template_name = "mainapp/news.html"
-    paginated_by = 3
+class NewsListView(ListView):
+    model = News
+    paginate_by = 5
 
-    def get_context_data(self, **kwargs):
-
-        page_number = self.request.GET.get('page', 1)
-        paginator = Paginator(News.objects.all(), self.paginated_by)
-        page = paginator.get_page(page_number)
-        context = super().get_context_data(**kwargs)
-
-        context['page'] = page
-
-        return context
+    def get_queryset(self):
+        return super().get_queryset().filter(deleted=False)
 
 
-class NewsDetailsPageView(TemplateView):
-    template_name = 'mainapp/news_details.html'
+class NewsCreateView(PermissionRequiredMixin, CreateView):
+    model = News
+    fields = "__all__"
+    success_url = reverse_lazy("mainapp:news")
+    permission_required = ("mainapp.add_news",)
 
-    def get_context_data(self, pk=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['news_object'] = get_object_or_404(News, pk=pk)
-        return context
+
+class NewsDetailView(DetailView):
+    model = News
+
+
+class NewsUpdateView(PermissionRequiredMixin, UpdateView):
+    model = News
+    fields = "__all__"
+    success_url = reverse_lazy("mainapp:news")
+    permission_required = ("mainapp.change_news",)
+
+
+class NewsDeleteView(PermissionRequiredMixin, DeleteView):
+    model = News
+    success_url = reverse_lazy("mainapp:news")
+    permission_required = ("mainapp.delete_news",)
 
 
 class LoginPageView(TemplateView):
@@ -49,19 +60,12 @@ class DocSitePageView(TemplateView):
     template_name = "mainapp/doc_site.html"
 
 
-class CoursesPageView(TemplateView):
+class CoursesListView(TemplateView):
     template_name = "mainapp/courses_list.html"
-    paginated_by = 3
 
     def get_context_data(self, **kwargs):
-
-        page_number = self.request.GET.get('page', 1)
-        paginator = Paginator(Courses.objects.all(), self.paginated_by)
-        page = paginator.get_page(page_number)
-        context = super().get_context_data(**kwargs)
-
-        context['page'] = page
-
+        context = super(CoursesListView, self).get_context_data(**kwargs)
+        context["objects"] = Courses.objects.all()[:7]
         return context
 
 
@@ -73,5 +77,18 @@ class CoursesDetailView(TemplateView):
         context["course_object"] = get_object_or_404(Courses, pk=pk)
         context["lessons"] = Lesson.objects.filter(course=context["course_object"])
         context["teachers"] = CourseTeachers.objects.filter(course=context["course_object"])
-
+        if not self.request.user.is_anonymous:
+            if not CourseFeedback.objects.filter(course=context["course_object"], user=self.request.user).count():
+                context["feedback_form"] = CourseFeedbackForm(course=context["course_object"], user=self.request.user)
+        context["feedback_list"] = CourseFeedback.objects.filter(course=context["course_object"]).order_by("-created", "-rating")[:5]
         return context
+
+
+class CourseFeedbackFormProcessView(LoginRequiredMixin, CreateView):
+    model = CourseFeedback
+    form_class = CourseFeedbackForm
+
+    def form_valid(self, form):
+        self.object = form.save()
+        rendered_card = render_to_string("mainapp/includes/feedback_card.html", context={"item": self.object})
+        return JsonResponse({"card": rendered_card})

@@ -10,9 +10,9 @@
 
     <div class="row justify-content-center mt-3">
 
-        {% for course in page %}
+        {% for course in objects %}
             <div class="card col-sm-12 col-md-6 col-lg-4 border-0">
-                <a href="{% url 'mainapp:course_details' course.pk %}">
+                <a href="{% url 'mainapp:courses_detail' course.pk %}">
                     <img src="{% static course.cover %}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title text-center">{{ course.name }}</h5>
@@ -56,3 +56,4 @@
 {% include 'components/footer.html' %}
 
 {% endblock content %}
+
