@@ -30,7 +30,7 @@ class MainPageView(TemplateView):
 
 class NewsListView(ListView):
     model = News
-    paginate_by = 5
+    paginate_by = 2
 
     def get_queryset(self):
         return super().get_queryset().filter(deleted=False)
@@ -94,12 +94,14 @@ class DocSitePageView(TemplateView):
     template_name = "mainapp/doc_site.html"
 
 
-class CoursesListView(TemplateView):
+class CoursesListView(ListView):
     template_name = "mainapp/courses_list.html"
+    model = Courses
+    paginate_by = 2
 
     def get_context_data(self, **kwargs):
         context = super(CoursesListView, self).get_context_data(**kwargs)
-        context["objects"] = Courses.objects.all()[:7]
+        # context["objects"] = Courses.objects.all()[:7]
         return context
 
 
@@ -115,17 +117,28 @@ class CoursesDetailView(TemplateView):
         if not self.request.user.is_anonymous:
             if not CourseFeedback.objects.filter(course=context["course_object"], user=self.request.user).count():
                 context["feedback_form"] = CourseFeedbackForm(course=context["course_object"], user=self.request.user)
-        context["feedback_list"] = CourseFeedback.objects.filter(course=context["course_object"]).order_by("-created", "-rating")[:5]
-        return context
+        # context["feedback_list"] = CourseFeedback.objects.filter(course=context["course_object"]).order_by("-created", "-rating")[:5]
 
         cached_feedback = cache.get(f"feedback_list_{pk}")
         if not cached_feedback:
-            context["feedback_list"] = CourseFeedback.objects.filter(
-                course=context["course_object"]
-            ).order_by("-created", "-rating")[:5].select_related()
+            context["feedback_list"] = (
+                CourseFeedback.objects.filter(
+                    course=context["course_object"]
+                ).order_by("-created", "-rating")[:5].select_related()
+            )
             cache.set(f"feedback_list_{pk}", context["feedback_list"], timeout=300)  # 5 minutes
+
+            # Archive object for tests --->
+            import pickle
+            with open(
+                    f"mainapp/fixtures/006_feedback_list_{pk}.bin", "wb"
+            ) as outf:
+                pickle.dump(context["feedback_list"], outf)
+            # <--- Archive object for tests
+
         else:
             context["feedback_list"] = cached_feedback
+        return context
 
 
 class CourseFeedbackFormProcessView(LoginRequiredMixin, CreateView):
